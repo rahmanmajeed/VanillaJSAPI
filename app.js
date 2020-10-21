@@ -1,17 +1,26 @@
-const http = require('http')
+const url = require("url");
 
-const PORT = process.env.PORT || 5000
-/**
- * create server
- * @return instance 
- */
-const server = http.createServer((req, res)=>{
-    res.statusCode = 200
-    res.setHeader('Content-Type', "application/json")
-    res.write('Hello Vanilla')
-    res.end()
-})
+const products = require('./data/products')
 
-server.listen(PORT, ()=>{
-    console.log(`Server is running on ${PORT}...`)
-})
+const metData = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+};
+
+module.exports.routes = (req, res) => {
+  let route = url.parse(req.url).pathname;
+
+  res.writeHead(200, metData);
+  switch (route) {
+    case "/":
+      res.write("roots...");
+      break;
+    case "/products":
+      res.write(JSON.stringify(products));
+      break;
+
+    default:
+      break;
+  }
+  res.end();
+};
