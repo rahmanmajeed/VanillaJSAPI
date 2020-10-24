@@ -10,4 +10,13 @@ async function getAllProducts (req, res)  {
        }
 }
 
-module.exports = { getAllProducts}
+async function getProductById(id){
+     try {
+         const result = await model.findById(id)
+         return result
+     } catch (error) {
+         return error
+     }
+}
+
+module.exports = { getAllProducts, getProductById}

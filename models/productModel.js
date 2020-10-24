@@ -9,3 +9,12 @@ module.exports.findAll = () => {
         }
     })
 }
+
+module.exports.findById = (id) => {
+     const result = data.find((c) => c.id === id)
+     return result
+}
+
+module.exports.createProduct = (product) => {
+        
+}
