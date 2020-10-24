@@ -26,7 +26,18 @@ module.exports.routes = (req, res) => {
         products.getAllProducts().then(result => {
           res.end(JSON.stringify(result))       
          });
-       }else{
+       }else if(method === "POST"){
+         let body = ''
+         req.on('data', (chunk) => {
+           body += chunk.toString()
+         })
+         req.on('end', () => {
+            products.createProduct(req, res)
+            res.end(body)
+         })
+        
+       }
+       else{
          res.end('not found...')
        }
        
