@@ -27,13 +27,10 @@ module.exports.routes = (req, res) => {
           res.end(JSON.stringify(result))       
          });
        }else if(method === "POST"){
-         let body = ''
-         req.on('data', (chunk) => {
-           body += chunk.toString()
-         })
-         req.on('end', () => {
-            products.createProduct(req, res)
-            res.end(body)
+         products.createProduct(req, res).then(result => {
+           res.end(result)
+         }).catch(err => {
+           res.end(err)
          })
         
        }
