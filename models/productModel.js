@@ -1,5 +1,8 @@
 const data = require('./../data/products.json')
+const testData = require('./../data/test.json')
+const utils = require('./../utils')
 const {v4 : uuidv4} = require('uuid')
+const fs = require('fs')
 
 module.exports.findAll = () => {
     return new Promise((resolve, reject) => {
@@ -17,5 +20,18 @@ module.exports.findById = (id) => {
 }
 
 module.exports.create = (product) => {
-
+    let body = ''
+    return new Promise((resolve, reject) => {
+        product.on('data', (chunk) => {
+        body += chunk.toString()
+      })
+      product.on('end', () => {
+        //   utils.writeFile('./../data/test.json', body)
+        let fileResult = utils.writeFile('./data/test.json', body)
+        resolve(fileResult)
+      })
+      product.on('error', () => {
+          reject({message: "something happend in your code."})
+      })
+    })
 }

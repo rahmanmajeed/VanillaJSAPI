@@ -19,19 +19,13 @@ async function getProductById(id){
      }
 }
 
- function createProduct(req, res){
-    let body = ''
-    return new Promise((resolve, reject) => {
-        req.on('data', (chunk) => {
-        body += chunk.toString()
-      })
-      req.on('end', () => {
-          resolve(body)
-      })
-      req.on('error', () => {
-          reject({message: "something happend in your code."})
-      })
-    })
+ async function createProduct(req, res){
+    try {
+       const product = await model.create(req) 
+       res.end(product)
+    } catch (error) {
+        return error
+    }
     
 }
 
