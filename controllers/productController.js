@@ -22,7 +22,7 @@ async function getProductById(id){
  async function createProduct(req, res){
     try {
        const product = await model.create(req) 
-       res.end(product)
+       res.end(JSON.stringify(product))
     } catch (error) {
         return error
     }
